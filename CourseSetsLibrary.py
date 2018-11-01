@@ -3,7 +3,7 @@ import pandas as pd
 from pandas import ExcelWriter
 import numpy as np
 
-excel_file_name = "Initial Data Pull.xlsx"
+excel_file_name = "Pandas Practice.xlsx"
 sheet_in_excel_file = 'Export Worksheet'
 xl = pd.read_excel(excel_file_name, sheetname=sheet_in_excel_file)
 list_of_courses = list(set(xl['COURSE_ID']))
@@ -24,7 +24,8 @@ aggregated_binary_list = [sum(x) for x in zip(*binary_course_list)]
 # print(list_of_courses[65])
 course_array = np.array(binary_course_list)
 course_df = pd.DataFrame(data=course_array,index=list_of_penn_ids,columns=list_of_courses)
-writer = pd.ExcelWriter('Student Course Matrix.xlsx')
-course_df.to_excel(writer,'Sheet 1',index=True)
+# writer = pd.ExcelWriter('pStudent Course Matrix.xlsx')
+# course_df.to_excel(writer,'Sheet 1',index=True)
+# writer.close()
 #create a  file that will write to an excel sheet the binary listing of the classes with classes as headers
 #this is mostly be for reading and efficiency
