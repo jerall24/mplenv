@@ -19,7 +19,7 @@ for pennid_loop in list_of_penn_ids:
 for student in range(0,len(student_paths)):
    binary_course_list.append(student_paths[student].returnCourses())
   # print(student_paths[student].returnPennID(), student_paths[student].returnCourses())
-aggregated_binary_list = [sum(x) for x in zip(*binary_course_list)]
+# aggregated_binary_list = [sum(x) for x in zip(*binary_course_list)]
 # print(aggregated_binary_list)
 # print(list_of_courses[65])
 course_array = np.array(binary_course_list)
