@@ -31,6 +31,9 @@ def CreatePrepJSON():
     path_ends = list()
     for index2 in range(0,len(path_count_keys)):
         path_ends.append(path_count_keys[index2][1])
+    node_colors = list()
+    for color in range(0,len(gop.list_of_courses)):
+        node_colors.append('"rgba('+str(random.randint(1,255))+', '+str(random.randint(1,255))+', '+str(random.randint(1,255))+', 0.8)"')
     data = {
         "data": [
     {
@@ -56,7 +59,7 @@ def CreatePrepJSON():
                 "width": 0.5
             },
             "label": gop.list_of_courses,
-            "color": ['"rgba('+str(random.randint(1,255))+', '+str(random.randint(1,255))+', '+str(random.randint(1,255))+', 0.8)"',]*len(gop.list_of_courses)
+            "color": node_colors
             },
             "link": {
                 "source": path_starts,
