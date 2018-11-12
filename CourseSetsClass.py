@@ -1,10 +1,10 @@
 import pandas as pd
 
 class student_class:
-    def __init__(self,penn_id,list_of_courses,excel_name,sheet_name):
+    def __init__(self,penn_id,list_of_courses,excel_file_name,sheet_in_excel_file):
         #assign penn id to the student
         self.penn_id = int(penn_id)
-        self.file_name = pd.read_excel(excel_name, sheetname=sheet_name)
+        self.file_name = pd.read_excel(excel_file_name, sheetname=sheet_in_excel_file)
         self.indices_of_penn_ids = self.file_name['PENN_ID']
         #list of 0 and 1 if the student took the course at that index
         #the 0,1 correspond to the class in the list_of_courses

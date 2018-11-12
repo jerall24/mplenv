@@ -1,13 +1,13 @@
-import CourseSetsLibrary as csl
 import pandas as pd
 from pandas import ExcelWriter
 import GeneratingOrderedPairs as gop
+from GeneratingOrderedPairs import CreateOrderedPairs
 import json
 import random
 
 
-def CreateBinaryExcelDoc():
-    mem_df = csl.course_df.copy().T
+def CreateBinaryExcelDoc(CourseDataFrame,export_binary_file_name):
+    mem_df = CourseDataFrame.copy().T
     mem_df['Sum'] = mem_df.sum(axis=1)
     mem_df = mem_df.sort_values(by='Sum',ascending=False)
     mem_df = mem_df.copy().T
@@ -17,12 +17,12 @@ def CreateBinaryExcelDoc():
     courses_desc = list(mem_df)
     # mem_df = mem_df.sort_values(by=courses_desc,ascending=False)
     # print([c for c in courses_desc if "MGMT" in c])
-    writer = pd.ExcelWriter('pStudent Course Matrix.xlsx')
+    writer = pd.ExcelWriter(export_binary_file_name)
     mem_df.to_excel(writer,'Sheet 1',index=True)
     writer.close()
 
-def CreatePrepJSON():
-    path_counts_dict = gop.dict_of_ordered_pairs.copy()
+def CreatePrepJSON(excel_file_name,sheet_in_excel_file,json_file_name):
+    path_counts_dict,list_of_courses = gop.CreateOrderedPairs(excel_file_name,sheet_in_excel_file)[0].copy(),gop.CreateOrderedPairs(excel_file_name,sheet_in_excel_file)[1].copy()
     path_counts = list(path_counts_dict.values())
     path_count_keys = list(path_counts_dict.keys())
     path_starts = list()
@@ -32,7 +32,7 @@ def CreatePrepJSON():
     for index2 in range(0,len(path_count_keys)):
         path_ends.append(path_count_keys[index2][1])
     node_colors = list()
-    for color in range(0,len(gop.list_of_courses)):
+    for color in range(0,len(list_of_courses)):
         node_colors.append('"rgba('+str(random.randint(1,255))+', '+str(random.randint(1,255))+', '+str(random.randint(1,255))+', 0.8)"')
     data = {
         "data": [
@@ -58,7 +58,8 @@ def CreatePrepJSON():
                 "color": "black",
                 "width": 0.5
             },
-            "label": gop.list_of_courses,
+            #remove the "space" list creation to actually show labels.
+            "label": list_of_courses,
             "color": node_colors
             },
             "link": {
@@ -165,11 +166,11 @@ def CreatePrepJSON():
     ]
     }
     }
-    with open('Student Paths.json', 'w') as outfile:
+    with open(json_file_name, 'w') as outfile:
         json.dump(data,outfile)
 
 def main():
-    CreatePrepJSON()
+    CreatePrepJSON('All Student Paths.json')
 
 if __name__ == '__main__':
     main()
